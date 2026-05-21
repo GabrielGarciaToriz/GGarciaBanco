@@ -1,6 +1,5 @@
 package com.digis.GGarciaBanco.entity;
 
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +15,7 @@ public class Banco {
 
     private Integer idBanco;
     private String nombreBanco;
+    private Boolean esPredeterminado;
     private Boolean activo;
-    private LocalDateTime fechaRegistro;
+    private Integer prefijo;
 }

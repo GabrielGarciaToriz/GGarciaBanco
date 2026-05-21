@@ -1,6 +1,7 @@
 package com.digis.GGarciaBanco.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,10 @@ public class Usuario {
     private String publicId;
     private String nombre;
     private String apellidoPaterno;
-    private String apeliidoMaterno;
+    private String apellidoMaterno;
     private String correo;
-
     private String password;
     private Boolean activo;
     private LocalDateTime fechaRegistro;
+    private List<Tarjeta> tarjeta;
 }
