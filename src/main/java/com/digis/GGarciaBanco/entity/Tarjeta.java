@@ -16,13 +16,10 @@ import lombok.ToString;
 public class Tarjeta {
 
     private Integer idTarjeta;
+    public Usuario usuario;
+    public Banco banco;
     private String numeroTarjeta;
-    private Integer idUsuario;
-    private Usuario usuario;
-    private Integer idBnaco;
-    private Banco banco;
-    private BigDecimal saldo;
-    private Boolean activo;
-    private LocalDateTime fechaRegistro;
-    private LocalDateTime fechaVencimiento;
+    private boolean activa;
+    private LocalDateTime fecha_registro;
+
 }
