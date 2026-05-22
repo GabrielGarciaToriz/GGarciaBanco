@@ -6,7 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public abstract class BaseController {
-        protected ResponseEntity<Result> responder(Result result) {
+
+    protected ResponseEntity<Result> responder(Result result) {
         return new ResponseEntity<>(result, result.correct ? HttpStatus.OK : resolverStatus(result));
     }
 
@@ -20,6 +21,7 @@ public abstract class BaseController {
         }
         return new ResponseEntity<>(result, resolverStatus(result));
     }
+
     private HttpStatus resolverStatus(Result result) {
         if (result.errorCode == null) {
             return HttpStatus.BAD_REQUEST;
