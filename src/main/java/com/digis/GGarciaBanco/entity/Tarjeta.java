@@ -1,6 +1,14 @@
 package com.digis.GGarciaBanco.entity;
 
-import java.math.BigDecimal;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,13 +21,30 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Entity
+@Table(name = "TARJETA")
 public class Tarjeta {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_TARJETA")
     private Integer idTarjeta;
-    public Usuario usuario;
-    public Banco banco;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", nullable = false)
+    private Usuario usuario;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_BANCO", referencedColumnName = "ID_BANCO", nullable = false)
+    private Banco banco;
+
+    @Column(name = "NUMERO_TARJETA")
     private String numeroTarjeta;
-    private boolean activa;
-    private LocalDateTime fecha_registro;
+
+    @Column(name = "ACTIVA")
+    private Boolean activa;
+
+    @Column(name = "FECHA_REGISTRO")
+    private LocalDateTime fechaRegistro;
 
 }

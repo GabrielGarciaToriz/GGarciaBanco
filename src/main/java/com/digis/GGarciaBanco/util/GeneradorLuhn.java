@@ -1,14 +1,19 @@
 package com.digis.GGarciaBanco.util;
 
 import com.digis.GGarciaBanco.dto.Result;
-import java.util.Random;
+import java.security.SecureRandom;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class GeneradorLuhn {
+
+    private static final SecureRandom random = new SecureRandom();
 
     public static Result generarTarjeta(String prefijo, int longitud) {
         if (prefijo == null || !prefijo.matches("\\d+")) {
-            return Result.error("ERR_PREFIJO", "El prefijo solo contiene numeros");
+            return Result.error("ERR_PREFIJO", "El prefijo solo debe contener números.");
         }
+
         if (longitud < 12 || longitud > 19) {
             return Result.error("ERR_LONGITUD", "La longitud estándar de una tarjeta debe estar entre 12 y 19 dígitos.");
         }
@@ -18,7 +23,6 @@ public class GeneradorLuhn {
         }
 
         try {
-            Random random = new Random();
             StringBuilder numeroParcial = new StringBuilder(prefijo);
 
             while (numeroParcial.length() < longitud - 1) {
@@ -26,10 +30,10 @@ public class GeneradorLuhn {
             }
 
             int digitoControl = calcularDigitoControl(numeroParcial.toString());
-
             numeroParcial.append(digitoControl);
 
             return Result.ok(numeroParcial.toString());
+
         } catch (Exception e) {
             return Result.error("ERR_INTERNO", "Ocurrió un error inesperado al generar la tarjeta.", e);
         }
@@ -38,17 +42,22 @@ public class GeneradorLuhn {
     private static int calcularDigitoControl(String numero) {
         int suma = 0;
         boolean alternar = true;
-        for (int i = numero.length(); i >= 0; i--) {
+
+        for (int i = numero.length() - 1; i >= 0; i--) {
             int n = Character.getNumericValue(numero.charAt(i));
+
             if (alternar) {
                 n *= 2;
+
                 if (n > 9) {
                     n -= 9;
                 }
             }
+
             suma += n;
             alternar = !alternar;
         }
+
         return (10 - (suma % 10)) % 10;
     }
 
