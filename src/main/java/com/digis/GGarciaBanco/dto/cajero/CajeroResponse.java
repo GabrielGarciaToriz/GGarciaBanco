@@ -1,21 +1,22 @@
-package com.digis.GGarciaBanco.entity;
+    package com.digis.GGarciaBanco.dto.cajero;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class Cajero {
+public class CajeroResponse {
 
     private Integer idCajero;
     private String nombreCajero;
     private Boolean activo;
-    private Banco banco;
 
+    private Integer idBanco;
+    private String nombreBanco;
 }
