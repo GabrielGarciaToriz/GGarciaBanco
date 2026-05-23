@@ -1,25 +1,29 @@
-package com.digis.GGarciaBanco.entity;
+package com.digis.GGarciaBanco.dto.retiro;
 
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class RetiroDetalle {
+public class RetiroDetalleResponse {
 
     private Integer idRetiro;
-    private Retiro retiro;
-
     private Integer idDenominacion;
-    private Denominacion denominacion;
+
+    private String tipo;
+    private Long valorCentavos;
+    private BigDecimal valor;
 
     private Integer cantidad;
+
     private Long subtotalCentavos;
+    private BigDecimal subtotal;
 
 }

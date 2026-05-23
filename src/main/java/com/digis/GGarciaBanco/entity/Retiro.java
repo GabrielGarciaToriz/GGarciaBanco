@@ -16,20 +16,10 @@ import lombok.ToString;
 public class Retiro {
 
     private Integer idRetiro;
-    private String folio;
-
-    private Integer idUsuario;
-    private Usuario usuario;
-
-    private Integer idTarjeta;
-    private Tarjeta tarjeta;
-
-    private Integer idCajero;
     private Cajero cajero;
-
-    private BigDecimal monto;
-    private LocalDateTime fechaRetiro;
-
-    private Boolean exitoso;
+    private Tarjeta tarjeta;
+    private Long montoCentavos;
+    private LocalDateTime fecha;
+    private String estado;
     private String mensaje;
 }

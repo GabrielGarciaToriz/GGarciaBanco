@@ -14,15 +14,8 @@ import lombok.ToString;
 @ToString
 public class CajeroInventario {
 
-    private Integer idCajeroInventario;
-
-    private Integer idCajero;
     private Cajero cajero;
-
-    private Integer idDenominacion;
     private Denominacion denominacion;
-
-    private Integer cantidad;
-    private LocalDateTime fechaActualizacion;
+    private Long cantidadActual;
 
 }

@@ -11,9 +11,10 @@ public class CorsFilterConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry corsRegistry) {
         corsRegistry.addMapping("/**")
                 .allowedOriginPatterns("http://localhost:4200")
-                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE")
-                .allowedHeaders("*")
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+                .allowedHeaders("Content-Type", "Authorization", "X-Numero-Tarjeta")
                 .exposedHeaders("Authorization")
-                .allowCredentials(false);
+                .allowCredentials(true);
+
     }
 }
