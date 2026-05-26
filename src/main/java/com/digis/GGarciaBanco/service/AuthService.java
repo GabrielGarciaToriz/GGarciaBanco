@@ -1,51 +1,52 @@
 package com.digis.GGarciaBanco.service;
 
 import com.digis.GGarciaBanco.dto.Result;
-import com.digis.GGarciaBanco.dto.auth.LoginRequest;
-import com.digis.GGarciaBanco.dto.auth.LoginResponse;
+import com.digis.GGarciaBanco.dto.auth.AuthResponse;
+import com.digis.GGarciaBanco.dto.login.LoginRequest;
+import com.digis.GGarciaBanco.dto.login.LoginResponse;
 import com.digis.GGarciaBanco.dto.sp.StoredProcedureResult;
+import com.digis.GGarciaBanco.entity.Tarjeta;
+import com.digis.GGarciaBanco.entity.Usuario;
 import com.digis.GGarciaBanco.repository.AuthRepository;
+import com.digis.GGarciaBanco.repository.TarjetaRepository;
+import com.digis.GGarciaBanco.util.JwtUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService extends BaseService {
 
-    @Autowired
-    private AuthRepository authRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
+    private final TarjetaRepository tarjetaRepository;
 
-    public Result<LoginResponse> login(LoginRequest request) {
+    public AuthResponse login(LoginRequest request) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getNumeroTarjeta(),
+                        request.getPassword()
+                )
+        );
 
-        if (request == null) {
-            return Result.error("INVALID_INPUT", "Los datos de inicio de sesión son obligatorios.");
-        }
+        Tarjeta tarjeta = tarjetaRepository
+                .findByNumeroTarjetaAndActivaTrue(request.getNumeroTarjeta())
+                .orElseThrow(() -> new UsernameNotFoundException("Tarjeta no encontrada"));
 
-        return ejecutar(() -> {
+        Usuario usuario = tarjeta.getUsuario();
+        String token = jwtUtil.generateToken(usuario);
 
-            if (request.getNumeroTarjeta() == null || request.getNumeroTarjeta().isBlank()) {
-                throw new IllegalArgumentException("El número de tarjeta es obligatorio.");
-            }
-
-            if (request.getPassword() == null || request.getPassword().isBlank()) {
-                throw new IllegalArgumentException("La contraseña es obligatoria.");
-            }
-
-            StoredProcedureResult<LoginResponse> spResult = authRepository.login(request);
-
-            if (spResult.getCodigo() == null) {
-                throw new IllegalStateException("El procedimiento almacenado no devolvió código de respuesta.");
-            }
-
-            if (!Integer.valueOf(0).equals(spResult.getCodigo())) {
-                throw new IllegalArgumentException(spResult.getMensaje());
-            }
-
-            if (spResult.getObject() == null) {
-                throw new IllegalStateException("El procedimiento almacenado respondió exitosamente pero no devolvió datos de sesión.");
-            }
-
-            return spResult.getObject();
-        });
+        return new AuthResponse(
+                token,
+                usuario.getNombre() + " " + usuario.getApellidoPaterno(),
+                tarjeta.getNumeroTarjeta(),
+                usuario.getIdUsuario().longValue(),
+                tarjeta.getBanco().getNombreBanco()
+        );
     }
 
 }

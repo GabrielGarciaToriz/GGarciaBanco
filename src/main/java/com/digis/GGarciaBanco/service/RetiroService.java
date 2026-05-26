@@ -4,7 +4,8 @@ import com.digis.GGarciaBanco.dto.Result;
 import com.digis.GGarciaBanco.dto.retiro.RetiroRequest;
 import com.digis.GGarciaBanco.dto.retiro.RetiroResponse;
 import com.digis.GGarciaBanco.dto.sp.StoredProcedureResult;
-import com.digis.GGarciaBanco.repository.CajeroRetiroRepository;
+import com.digis.GGarciaBanco.repository.CajeroRepository;
+import com.digis.GGarciaBanco.repository.RetiroRepository;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,10 @@ import org.springframework.stereotype.Service;
 public class RetiroService extends BaseService {
 
     @Autowired
-    private CajeroRetiroRepository cajeroRetiroRepository;
+    private RetiroRepository retiroRepository;
 
     @Transactional
-    public Result retirar(RetiroRequest request) {
+    public Result<RetiroResponse> retirar(RetiroRequest request) {
         return ejecutar(() -> {
 
             if (request == null) {
@@ -44,15 +45,12 @@ public class RetiroService extends BaseService {
                 throw new IllegalArgumentException("El monto debe ser mayor a cero.");
             }
 
-            StoredProcedureResult<RetiroResponse> spResult
-                    = cajeroRetiroRepository.retirar(request);
-
-            if (!Integer.valueOf(0).equals(spResult.getCodigo())) {
-                throw new IllegalArgumentException(spResult.getMensaje());
-            }
-
-            return spResult.getObject();
+            return retiroRepository.retirar(
+                    request.getIdUsuario(),
+                    request.getNumeroTarjeta(),
+                    request.getIdCajero(),
+                    request.getMonto()
+            );
         });
     }
-
 }

@@ -4,7 +4,7 @@ import com.digis.GGarciaBanco.dto.Result;
 import com.digis.GGarciaBanco.dto.cajero.CajeroResponse;
 import com.digis.GGarciaBanco.dto.cajero.InventarioCajeroResponse;
 import com.digis.GGarciaBanco.dto.sp.StoredProcedureResult;
-import com.digis.GGarciaBanco.repository.CajeroRetiroRepository;
+import com.digis.GGarciaBanco.repository.CajeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,47 +12,33 @@ import org.springframework.stereotype.Service;
 public class CajeroService extends BaseService {
 
     @Autowired
-    private CajeroRetiroRepository cajeroRetiroRepository;
+    private CajeroRepository cajeroRepository;
 
-    public Result listarCajerosPorTarjeta(Integer idUsuario, String numeroTarjeta) {
+    public Result<CajeroResponse> listarCajerosPorTarjeta(Integer idUsuario, String numeroTarjeta) {
         return ejecutarLista(() -> {
 
             if (idUsuario == null) {
                 throw new IllegalArgumentException("El usuario es obligatorio.");
             }
 
-            // FIX: null debe validarse ANTES de isBlank() para evitar NullPointerException
             if (numeroTarjeta == null || numeroTarjeta.isBlank()) {
                 throw new IllegalArgumentException("El número de tarjeta es obligatorio.");
             }
 
-            StoredProcedureResult<CajeroResponse> result
-                    = cajeroRetiroRepository.listarCajerosPorTarjeta(idUsuario, numeroTarjeta);
-
-            if (!Integer.valueOf(0).equals(result.getCodigo())) {
-                throw new IllegalArgumentException(result.getMensaje());
-            }
-
-            return result.getObjects();
+            // El repository ya lanza RuntimeException si codigo != 0
+            return cajeroRepository.listarCajerosPorTarjeta(idUsuario, numeroTarjeta);
         });
     }
 
-    public Result consultarInventario(Integer idCajero) {
+    public Result<InventarioCajeroResponse> consultarInventario(Integer idCajero) {
         return ejecutarLista(() -> {
 
             if (idCajero == null) {
                 throw new IllegalArgumentException("El cajero es obligatorio.");
             }
 
-            StoredProcedureResult<InventarioCajeroResponse> spResult
-                    = cajeroRetiroRepository.consultarInventario(idCajero);
-
-            if (!Integer.valueOf(0).equals(spResult.getCodigo())) {
-                throw new IllegalArgumentException(spResult.getMensaje());
-            }
-
-            return spResult.getObjects();
+            // El repository ya lanza RuntimeException si codigo != 0
+            return cajeroRepository.consultarInventario(idCajero);
         });
     }
-
 }

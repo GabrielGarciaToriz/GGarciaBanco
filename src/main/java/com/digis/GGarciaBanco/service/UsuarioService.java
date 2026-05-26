@@ -25,11 +25,10 @@ public class UsuarioService extends BaseService {
     @Autowired
     private BancoRepository bancoRepository;
 
-    // FIX: encoder declarado como campo para no instanciarlo en cada llamada
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Transactional
-    public Result agregarUsuario(UsuarioRegistroRequest request) {
+    public Result<UsuarioRegistroResponse> agregarUsuario(UsuarioRegistroRequest request) {
         return ejecutar(() -> {
 
             if (request == null) {
@@ -51,13 +50,13 @@ public class UsuarioService extends BaseService {
                 throw new IllegalArgumentException("El banco seleccionado no tiene BIN configurado.");
             }
 
-            Result uuidResult = GeneradorUUID.generarUUID(false);
+            Result<?> uuidResult = GeneradorUUID.generarUUID(false);
             if (!uuidResult.correct || uuidResult.object == null) {
                 throw new IllegalStateException("No se pudo generar el UUID del usuario.");
             }
             String uuid = uuidResult.object.toString();
 
-            Result tarjetaResult = GeneradorLuhn.generarTarjeta(
+            Result<?> tarjetaResult = GeneradorLuhn.generarTarjeta(
                     banco.getBin().toString(),
                     LONGITUD_TARJETA
             );
@@ -66,8 +65,6 @@ public class UsuarioService extends BaseService {
             }
             String numeroTarjeta = tarjetaResult.object.toString();
 
-            // FIX: password hasheado con BCrypt antes de enviarlo al stored procedure.
-            // Si el SP ya hashea internamente, elimina esta línea y el campo passwordEncoder.
             String passwordHash = passwordEncoder.encode(request.getPassword());
 
             Integer idUsuario = usuarioRepository.agregarUsuario(
@@ -76,10 +73,13 @@ public class UsuarioService extends BaseService {
                     request.getApellidoPaterno(),
                     request.getApellidoMaterno(),
                     request.getCorreo(),
-                    passwordHash, // FIX: se envía el hash, no el texto plano
+                    passwordHash,
                     banco.getIdBanco(),
                     numeroTarjeta
             );
+
+            // FIX: bin se convierte a String aquí para evitar llamadas repetidas a toString()
+            String binStr = banco.getBin().toString();
 
             return UsuarioRegistroResponse.builder()
                     .idUsuario(idUsuario)
@@ -90,7 +90,7 @@ public class UsuarioService extends BaseService {
                     .correo(request.getCorreo())
                     .idBanco(banco.getIdBanco())
                     .nombreBanco(banco.getNombreBanco())
-                    .bin(banco.getBin().toString())
+                    .bin(binStr) // FIX: campo ahora existe en el DTO
                     .numeroTarjeta(numeroTarjeta)
                     .build();
         });

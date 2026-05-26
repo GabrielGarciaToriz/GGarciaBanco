@@ -1,11 +1,9 @@
 package com.digis.GGarciaBanco.dto.retiro;
 
 import java.math.BigDecimal;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class RetiroRequest {
 
     private Integer idUsuario;

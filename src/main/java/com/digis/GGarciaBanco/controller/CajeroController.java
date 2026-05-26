@@ -19,7 +19,7 @@ public class CajeroController extends BaseController {
     @Autowired
     private CajeroService cajeroService;
 
-    @GetMapping("/tarjeta")
+    @PostMapping("/tarjeta")
     public ResponseEntity<Result<?>> listarCajeroporTarjeta(
             @RequestBody CajeroConsultaRequest request
     ) {
