@@ -8,5 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 @Repository
 public interface TarjetaRepository extends JpaRepository<Tarjeta, Integer> {
 
+    Optional<Tarjeta> findByUsuario_IdUsuario(Integer idUsuario);
+
     Optional<Tarjeta> findByNumeroTarjetaAndActivaTrue(String numeroTarjeta);
+
+    Optional<Tarjeta> findByNumeroTarjeta(String numeroTarjeta);
 }

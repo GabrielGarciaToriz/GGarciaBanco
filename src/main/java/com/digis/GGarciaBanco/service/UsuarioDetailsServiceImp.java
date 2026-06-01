@@ -18,11 +18,10 @@ public class UsuarioDetailsServiceImp implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String numeroTarjeta)
             throws UsernameNotFoundException {
-
         return tarjetaRepository
-                .findByNumeroTarjetaAndActivaTrue(numeroTarjeta) // ← busca tarjeta activa
-                .map(tarjeta -> tarjeta.getUsuario()) // ← obtiene el Usuario dueño
+                .findByNumeroTarjeta(numeroTarjeta)
+                .map(tarjeta -> tarjeta.getUsuario())
                 .orElseThrow(() -> new UsernameNotFoundException(
-                "Tarjeta no encontrada o inactiva: " + numeroTarjeta));
+                "Tarjeta no encontrada: " + numeroTarjeta));
     }
 }

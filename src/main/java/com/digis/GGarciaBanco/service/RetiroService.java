@@ -1,6 +1,7 @@
 package com.digis.GGarciaBanco.service;
 
 import com.digis.GGarciaBanco.dto.Result;
+import com.digis.GGarciaBanco.dto.retiro.MovimientoResponse;
 import com.digis.GGarciaBanco.dto.retiro.RetiroRequest;
 import com.digis.GGarciaBanco.dto.retiro.RetiroResponse;
 import com.digis.GGarciaBanco.dto.sp.StoredProcedureResult;
@@ -8,6 +9,8 @@ import com.digis.GGarciaBanco.repository.CajeroRepository;
 import com.digis.GGarciaBanco.repository.RetiroRepository;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +54,23 @@ public class RetiroService extends BaseService {
                     request.getIdCajero(),
                     request.getMonto()
             );
+        });
+    }
+
+    public Result<List<MovimientoResponse>> obtenerMovimientos(String publicId) {
+        return ejecutar(() -> {
+
+            if (publicId.isBlank() || publicId.isEmpty()) {
+                throw new IllegalArgumentException("El ID del usuario es inválido.");
+            }
+
+            List<MovimientoResponse> movimientos = retiroRepository.obtenerMovimientos(publicId);
+
+            if (movimientos == null || movimientos.isEmpty()) {
+                throw new NoSuchElementException("No se encontraron movimientos para este usuario.");
+            }
+
+            return movimientos;
         });
     }
 }

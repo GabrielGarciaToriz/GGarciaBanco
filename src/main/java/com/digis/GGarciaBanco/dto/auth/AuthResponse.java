@@ -14,4 +14,5 @@ public class AuthResponse {
     private String numeroTarjeta;
     private Long idUsuario;
     private String nombreBanco;
+    private String public_id;
 }

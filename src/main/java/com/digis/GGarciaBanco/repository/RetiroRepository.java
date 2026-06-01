@@ -1,11 +1,13 @@
 package com.digis.GGarciaBanco.repository;
 
+import com.digis.GGarciaBanco.dto.retiro.MovimientoResponse;
 import com.digis.GGarciaBanco.dto.retiro.RetiroResponse;
 import java.math.BigDecimal;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
@@ -61,6 +63,32 @@ public class RetiroRepository extends BaseRepository {
         resp.setMontoRetiro(monto);
         resp.setDetalle((List<RetiroResponse.DetalleRetiroResponse>) result.get("p_detalle"));
         return resp;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<MovimientoResponse> obtenerMovimientos(String publicId) {
+
+        SimpleJdbcCall call = new SimpleJdbcCall(jdbc)
+                .withProcedureName("obtener_movimientos_usuario")
+                .declareParameters(
+                        in("p_public_id", Types.VARCHAR),
+                        outCursor("p_cursor")
+                )
+                .returningResultSet("p_cursor", (rs, n) -> {
+                    MovimientoResponse m = new MovimientoResponse();
+                    m.setIdRetiro(rs.getInt("id_retiro"));
+                    m.setMonto(rs.getBigDecimal("monto_centavos")); // Coincide con tu BD
+                    m.setNumeroTarjeta(rs.getString("numero_tarjeta"));
+                    m.setNombreCajero(rs.getString("nombre"));      // Coincide con tu BD
+                    m.setFecha(rs.getDate("fecha"));                // Coincide con tu BD
+                    return m;
+                });
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("p_public_id", publicId);
+
+        Map<String, Object> result = call.execute(params);
+        return (List<MovimientoResponse>) result.get("p_cursor");
     }
 
 }
