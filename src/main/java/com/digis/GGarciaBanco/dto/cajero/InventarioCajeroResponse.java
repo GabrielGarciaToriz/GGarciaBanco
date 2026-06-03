@@ -1,25 +1,18 @@
 package com.digis.GGarciaBanco.dto.cajero;
 
 import java.math.BigDecimal;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class InventarioCajeroResponse {
 
     private Integer idCajero;
     private Integer idDenominacion;
     private String tipo;
-    private Long valorCentavos;
+    private BigDecimal valorCentavos;
     private BigDecimal valor;
-    private Long cantidadActual;
-    private Long totalCentavos;
+    private Integer cantidadActual;
+    private BigDecimal totalCentavos;
     private BigDecimal total;
+
 }

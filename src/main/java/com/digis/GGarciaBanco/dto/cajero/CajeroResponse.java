@@ -1,16 +1,8 @@
-    package com.digis.GGarciaBanco.dto.cajero;
+package com.digis.GGarciaBanco.dto.cajero;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class CajeroResponse {
 
     private Integer idCajero;

@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class CajeroConsultaRequest {
-        private Integer idUsuario;
-    private String  numeroTarjeta;
+
+    private Integer idUsuario;
+    private String numeroTarjeta;
 
 }

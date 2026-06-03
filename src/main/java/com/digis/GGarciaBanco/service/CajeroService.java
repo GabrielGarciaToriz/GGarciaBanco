@@ -2,9 +2,9 @@ package com.digis.GGarciaBanco.service;
 
 import com.digis.GGarciaBanco.dto.Result;
 import com.digis.GGarciaBanco.dto.cajero.CajeroResponse;
+import com.digis.GGarciaBanco.dto.cajero.DashboardCajeroResponse;
 import com.digis.GGarciaBanco.dto.cajero.InventarioCajeroResponse;
-import com.digis.GGarciaBanco.dto.sp.StoredProcedureResult;
-import com.digis.GGarciaBanco.repository.CajeroRetiroRepository;
+import com.digis.GGarciaBanco.repository.CajeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,47 +12,54 @@ import org.springframework.stereotype.Service;
 public class CajeroService extends BaseService {
 
     @Autowired
-    private CajeroRetiroRepository cajeroRetiroRepository;
+    private CajeroRepository cajeroRepository;
 
-    public Result listarCajerosPorTarjeta(Integer idUsuario, String numeroTarjeta) {
-        return ejecutarLista(() -> {
-
+    // --- NUEVO MÉTODO PARA EL DASHBOARD ---
+    public Result<DashboardCajeroResponse> obtenerDashboardCajero(Integer idUsuario, String numeroTarjeta) {
+        // Usamos tu método 'ejecutar()' heredado de BaseService
+        return ejecutar(() -> {
+            
             if (idUsuario == null) {
                 throw new IllegalArgumentException("El usuario es obligatorio.");
             }
 
-            // FIX: null debe validarse ANTES de isBlank() para evitar NullPointerException
-            if (numeroTarjeta == null || numeroTarjeta.isBlank()) {
+            if (numeroTarjeta == null || numeroTarjeta.trim().isEmpty()) {
                 throw new IllegalArgumentException("El número de tarjeta es obligatorio.");
             }
 
-            StoredProcedureResult<CajeroResponse> result
-                    = cajeroRetiroRepository.listarCajerosPorTarjeta(idUsuario, numeroTarjeta);
-
-            if (!Integer.valueOf(0).equals(result.getCodigo())) {
-                throw new IllegalArgumentException(result.getMensaje());
-            }
-
-            return result.getObjects();
+            // Llamamos al repository que ejecuta el nuevo SP
+            return cajeroRepository.obtenerDashboardCajero(idUsuario, numeroTarjeta);
         });
     }
 
-    public Result consultarInventario(Integer idCajero) {
-        return ejecutarLista(() -> {
+    // --- NUEVO MÉTODO PARA RELLENAR CAJEROS ---
+    public Result<String> rellenarCajerosSinFondos() {
+        // Usamos tu método 'ejecutar()' heredado de BaseService
+        return ejecutar(() -> {
+            // El repository ejecuta el SP y devuelve un mensaje
+            return cajeroRepository.rellenarCajerosSinFondos();
+        });
+    }
 
+    // --- MÉTODOS ANTERIORES (Por si los usas en otro lado) ---
+    public Result<CajeroResponse> listarCajerosPorTarjeta(Integer idUsuario, String numeroTarjeta) {
+        return ejecutarLista(() -> {
+            if (idUsuario == null) {
+                throw new IllegalArgumentException("El usuario es obligatorio.");
+            }
+            if (numeroTarjeta == null || numeroTarjeta.isBlank()) {
+                throw new IllegalArgumentException("El número de tarjeta es obligatorio.");
+            }
+            return cajeroRepository.listarCajerosPorTarjeta(idUsuario, numeroTarjeta);
+        });
+    }
+
+    public Result<InventarioCajeroResponse> consultarInventario(Integer idCajero) {
+        return ejecutarLista(() -> {
             if (idCajero == null) {
                 throw new IllegalArgumentException("El cajero es obligatorio.");
             }
-
-            StoredProcedureResult<InventarioCajeroResponse> spResult
-                    = cajeroRetiroRepository.consultarInventario(idCajero);
-
-            if (!Integer.valueOf(0).equals(spResult.getCodigo())) {
-                throw new IllegalArgumentException(spResult.getMensaje());
-            }
-
-            return spResult.getObjects();
+            return cajeroRepository.consultarInventario(idCajero);
         });
     }
-
 }

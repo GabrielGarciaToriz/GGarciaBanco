@@ -13,16 +13,13 @@ public class UsuarioRegistroResponse {
 
     private Integer idUsuario;
     private String publicId;
-
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String correo;
-
     private String numeroTarjeta;
-
-    private Integer idBanco;
     private String nombreBanco;
+    private Integer idBanco;
     private String bin;
 
 }

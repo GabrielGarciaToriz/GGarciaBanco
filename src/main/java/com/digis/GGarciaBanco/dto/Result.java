@@ -1,19 +1,36 @@
 package com.digis.GGarciaBanco.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
-public class Result<T> {
+@Getter
+@Setter
+public class Result<T> implements Serializable {
 
-    public boolean correct;
-    public String errorMessage;
-    public String errorCode;
-    public T object;
-    public List<T> objects;
+    private static final long serialVersionUID = 1L;
+
+    private boolean correct;
+    private String errorMessage;
+    private String errorCode;
+    private T object;
+    private List<T> objects;
+
     @JsonIgnore
-    public Exception ex;
+    private transient Exception ex;
+
+    public static <T> Result<T> ok() {
+        Result<T> result = new Result<>();
+        result.correct = true;
+        return result;
+    }
 
     public static <T> Result<T> ok(T object) {
         Result<T> result = new Result<>();
@@ -25,7 +42,7 @@ public class Result<T> {
     public static <T> Result<T> okList(List<T> objects) {
         Result<T> result = new Result<>();
         result.correct = true;
-        result.objects = objects;
+        result.objects = objects != null ? objects : Collections.emptyList();
         return result;
     }
 
@@ -43,4 +60,13 @@ public class Result<T> {
         return result;
     }
 
+    @JsonIgnore
+    public boolean hasObject() {
+        return object != null;
+    }
+
+    @JsonIgnore
+    public boolean hasObjects() {
+        return objects != null && !objects.isEmpty();
+    }
 }

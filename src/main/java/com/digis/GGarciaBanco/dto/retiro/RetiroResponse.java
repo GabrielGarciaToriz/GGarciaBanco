@@ -1,22 +1,26 @@
 package com.digis.GGarciaBanco.dto.retiro;
 
+import java.math.BigDecimal;
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class RetiroResponse {
 
     private Integer idRetiro;
-    private String estado;
-    private String mensaje;
+    private BigDecimal montoRetiro;
+    private List<DetalleRetiroResponse> detalle;
 
-    private List<RetiroDetalleResponse> detalle;
+    @Data
+    public static class DetalleRetiroResponse {
+
+        private Integer idDenominacion;
+        private String tipo;
+        private BigDecimal valorCentavos;
+        private BigDecimal valor;
+        private Integer cantidad;
+        private BigDecimal subtotalCentavos;
+        private BigDecimal subtotal;
+    }
+
 }
