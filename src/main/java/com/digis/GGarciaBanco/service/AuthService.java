@@ -55,14 +55,14 @@ public class AuthService extends BaseService {
         // Corrección: Boolean.TRUE.equals() — funciona correctamente con Boolean wrapper
         // Cubre los casos: null, false, y true de forma segura
         boolean cuentaInactiva = !Boolean.TRUE.equals(usuario.getActivo())
-                              || !Boolean.TRUE.equals(tarjeta.getActiva());
+                || !Boolean.TRUE.equals(tarjeta.getActiva());
 
         if (cuentaInactiva) {
 
             try {
                 Result<Boolean> reenvio = usuarioService.reenviarActivacion(usuario.getPublicId());
-                if (!reenvio.correct) {
-                    System.err.println("reenviarActivacion falló: " + reenvio.errorMessage);
+                if (!reenvio.isCorrect()) {
+                    System.err.println("reenviarActivacion falló: " + reenvio.getErrorMessage());
                 }
             } catch (Exception e) {
                 System.err.println("Excepción en reenviarActivacion: " + e.getMessage());

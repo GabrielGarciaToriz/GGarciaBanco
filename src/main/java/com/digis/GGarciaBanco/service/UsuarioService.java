@@ -27,8 +27,8 @@ import org.springframework.stereotype.Service;
 public class UsuarioService extends BaseService {
 
     private static final int LONGITUD_TARJETA = 16;
-    private final String SECRET_ACTIVACION = "pFhSxlmsSPAYkxuMGkcbrcS4q3B6LkD2t62QR1a2o7y8EmGfKQCxKe4o6t5";
-    private final long EXPIRACION_15_MIN = 15 * 60 * 1000;
+    private static final String SECRET_ACTIVACION = "pFhSxlmsSPAYkxuMGkcbrcS4q3B6LkD2t62QR1a2o7y8EmGfKQCxKe4o6t5";
+    private static final long EXPIRACION_15_MIN = 15 * 60 * 1000;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -54,8 +54,13 @@ public class UsuarioService extends BaseService {
             if (request == null) {
                 throw new IllegalArgumentException("Los datos del usuario son obligatorios.");
             }
+
             if (request.getIdBanco() == null) {
                 throw new IllegalArgumentException("Debe seleccionar un banco.");
+            }
+
+            if (request.getPassword() == null || request.getPassword().isBlank()) {
+                throw new IllegalArgumentException("La contraseña es obligatoria.");
             }
 
             Banco banco = bancoRepository.findById(request.getIdBanco())
@@ -64,22 +69,29 @@ public class UsuarioService extends BaseService {
             if (!Integer.valueOf(1).equals(banco.getActivo())) {
                 throw new IllegalArgumentException("El banco seleccionado no está activo.");
             }
+
             if (banco.getBin() == null) {
                 throw new IllegalArgumentException("El banco seleccionado no tiene BIN configurado.");
             }
 
             Result<?> uuidResult = GeneradorUUID.generarUUID(false);
-            if (!uuidResult.correct || uuidResult.object == null) {
+
+            if (!uuidResult.isCorrect() || uuidResult.getObject() == null) {
                 throw new IllegalStateException("No se pudo generar el UUID del usuario.");
             }
-            String uuid = uuidResult.object.toString();
+
+            String uuid = uuidResult.getObject().toString();
 
             Result<?> tarjetaResult = GeneradorLuhn.generarTarjeta(
-                    banco.getBin().toString(), LONGITUD_TARJETA);
-            if (!tarjetaResult.correct || tarjetaResult.object == null) {
-                throw new IllegalArgumentException(tarjetaResult.errorMessage);
+                    banco.getBin().toString(),
+                    LONGITUD_TARJETA
+            );
+
+            if (!tarjetaResult.isCorrect() || tarjetaResult.getObject() == null) {
+                throw new IllegalArgumentException(tarjetaResult.getErrorMessage());
             }
-            String numeroTarjeta = tarjetaResult.object.toString();
+
+            String numeroTarjeta = tarjetaResult.getObject().toString();
 
             String passwordHash = passwordEncoder.encode(request.getPassword());
 
@@ -94,14 +106,17 @@ public class UsuarioService extends BaseService {
                     numeroTarjeta
             );
 
-            // Obtener el usuario recién creado para guardar el token
             Usuario usuario = usuarioRepository.findByPublicId(uuid)
                     .orElseThrow(() -> new IllegalStateException("Error al recuperar el usuario creado."));
 
             String tokenActivacion = generarYGuardarToken(usuario);
 
             try {
-                emailService.enviarCorreoVerificacion(request.getCorreo(), request.getNombre(), tokenActivacion);
+                emailService.enviarCorreoVerificacion(
+                        request.getCorreo(),
+                        request.getNombre(),
+                        tokenActivacion
+                );
             } catch (Exception e) {
                 System.err.println("Error al enviar correo: " + e.getMessage());
             }
@@ -125,12 +140,18 @@ public class UsuarioService extends BaseService {
     public Result<Boolean> activarCuenta(String tokenJwt) {
         return ejecutar(() -> {
 
+            if (tokenJwt == null || tokenJwt.isBlank()) {
+                throw new IllegalArgumentException("El token de activación es obligatorio.");
+            }
+
             TokenActivacion tokenEntity = tokenActivacionRepository
                     .findByTokenAndUsadoFalse(tokenJwt)
-                    .orElseThrow(() -> new IllegalStateException(
-                            "El enlace de activación ya fue usado o no es válido. Solicita uno nuevo."));
+                    .orElseThrow(() -> new IllegalArgumentException(
+                    "El enlace de activación ya fue usado o no es válido. Solicita uno nuevo."
+            ));
 
             String publicId;
+
             try {
                 publicId = Jwts.parser()
                         .setSigningKey(SECRET_ACTIVACION.getBytes())
@@ -138,20 +159,23 @@ public class UsuarioService extends BaseService {
                         .getBody()
                         .getSubject();
             } catch (Exception e) {
-                throw new IllegalStateException("El enlace de activación ha expirado (15 min). Solicita uno nuevo.");
+                throw new IllegalArgumentException(
+                        "El enlace de activación ha expirado o no es válido. Solicita uno nuevo."
+                );
             }
 
             Usuario usuario = usuarioRepository.findByPublicId(publicId)
                     .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado."));
 
             if (Boolean.TRUE.equals(usuario.getActivo())) {
-                throw new IllegalStateException("Esta cuenta ya fue verificada. Puedes iniciar sesión.");
+                throw new IllegalArgumentException("Esta cuenta ya fue verificada. Puedes iniciar sesión.");
             }
 
             tokenEntity.setUsado(true);
             tokenActivacionRepository.save(tokenEntity);
 
             Integer filasAfectadas = usuarioRepository.activarUsuario(usuario.getIdUsuario());
+
             if (filasAfectadas == null || filasAfectadas == 0) {
                 throw new IllegalStateException("Ocurrió un error al intentar activar la cuenta.");
             }
@@ -177,30 +201,46 @@ public class UsuarioService extends BaseService {
     @Transactional
     public Result<Boolean> reenviarActivacion(String publicId) {
         return ejecutar(() -> {
+
+            if (publicId == null || publicId.isBlank()) {
+                throw new IllegalArgumentException("El publicId del usuario es obligatorio.");
+            }
+
             Usuario usuario = usuarioRepository.findByPublicId(publicId)
                     .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado."));
 
             if (Boolean.TRUE.equals(usuario.getActivo())) {
-                throw new IllegalStateException("La cuenta ya está activa.");
+                throw new IllegalArgumentException("La cuenta ya está activa.");
             }
 
             tokenActivacionRepository.invalidarTokensAnteriores(usuario.getIdUsuario());
 
             String nuevoToken = generarYGuardarToken(usuario);
-            emailService.enviarCorreoVerificacion(usuario.getCorreo(), usuario.getNombre(), nuevoToken);
+
+            emailService.enviarCorreoVerificacion(
+                    usuario.getCorreo(),
+                    usuario.getNombre(),
+                    nuevoToken
+            );
+
             return true;
         });
     }
 
     public Result<Boolean> verificarEstatus(String publicId) {
         return ejecutar(() -> {
+
+            if (publicId == null || publicId.isBlank()) {
+                throw new IllegalArgumentException("El publicId del usuario es obligatorio.");
+            }
+
             Usuario usuario = usuarioRepository.findByPublicId(publicId)
                     .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado."));
+
             return Boolean.TRUE.equals(usuario.getActivo());
         });
     }
 
-    // Genera el JWT, lo persiste en BD y lo retorna
     private String generarYGuardarToken(Usuario usuario) {
         String jwt = Jwts.builder()
                 .setSubject(usuario.getPublicId())
@@ -217,6 +257,7 @@ public class UsuarioService extends BaseService {
                 .build();
 
         tokenActivacionRepository.save(tokenEntity);
+
         return jwt;
     }
 }

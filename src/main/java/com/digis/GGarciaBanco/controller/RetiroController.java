@@ -1,7 +1,9 @@
 package com.digis.GGarciaBanco.controller;
 
 import com.digis.GGarciaBanco.dto.Result;
+import com.digis.GGarciaBanco.dto.retiro.HistorialMovimientoResponse;
 import com.digis.GGarciaBanco.dto.retiro.RetiroRequest;
+import com.digis.GGarciaBanco.service.HistorialMovimientoService;
 import com.digis.GGarciaBanco.service.RetiroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ public class RetiroController extends BaseController {
 
     @Autowired
     private RetiroService retiroService;
+    @Autowired
+    private HistorialMovimientoService HistorialMovimientoService;
 
     @PostMapping
     public ResponseEntity<Result<?>> retirar(
@@ -29,5 +33,19 @@ public class RetiroController extends BaseController {
     @GetMapping("/movimientos/{publicId}")
     public ResponseEntity<Result<?>> obtenerMovimientosUsuario(@PathVariable String publicId) {
         return responder(retiroService.obtenerMovimientos(publicId));
+    }
+
+    @GetMapping("/historial/{publicId}")
+    public ResponseEntity<Result<HistorialMovimientoResponse>> obtenerHistorialPorPublicId(
+            @PathVariable String publicId
+    ) {
+        Result<HistorialMovimientoResponse> result
+                = HistorialMovimientoService.obtenerHistorialPorPublicId(publicId);
+
+        if (result.isCorrect()) {
+            return ResponseEntity.ok(result);
+        }
+
+        return ResponseEntity.badRequest().body(result);
     }
 }

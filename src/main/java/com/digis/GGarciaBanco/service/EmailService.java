@@ -91,7 +91,7 @@ public class EmailService {
             helper.setSubject("Acción Requerida: Verifica tu cuenta en GGarciaBanco");
 
             // URL hacia tu frontend en Angular
-            String urlActivacion = "http://192.167.0.213:4200/activar?token=" + tokenVerificacion;
+            String urlActivacion = "http://192.167.0.190:4200/activar?token=" + tokenVerificacion;
 
             String contenidoHtml = """
                 <!DOCTYPE html>
