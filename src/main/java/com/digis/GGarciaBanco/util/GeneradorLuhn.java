@@ -61,10 +61,4 @@ public class GeneradorLuhn {
         return (10 - (suma % 10)) % 10;
     }
 
-    public static Result generarPorBanco(BancoBIN banco) {
-        if (banco == null) {
-            return Result.error("ERR_BANCO_NULL", "Se debe de especificar el banco");
-        }
-        return generarTarjeta(banco.getBin(), banco.getLongitd());
-    }
 }

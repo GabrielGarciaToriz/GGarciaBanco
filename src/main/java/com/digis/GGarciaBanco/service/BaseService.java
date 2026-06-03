@@ -5,41 +5,72 @@ import com.digis.GGarciaBanco.exception.ErrorCode;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class BaseService {
-     //CUANDO SOLO VOY A RECIBIR UN SOLO OBJECTO (result.object)
-    protected Result ejecutar(Supplier<Object> accion) {
+public abstract class BaseService {
+
+    protected <T> Result<T> ejecutar(Supplier<T> accion) {
         try {
             return Result.ok(accion.get());
         } catch (IllegalArgumentException e) {
             return Result.error(ErrorCode.INVALID_INPUT, e.getLocalizedMessage(), e);
-        } catch (RuntimeException e) {
+        } catch (java.util.NoSuchElementException e) {
             return Result.error(ErrorCode.NOT_FOUND, e.getLocalizedMessage(), e);
+        } catch (RuntimeException e) {
+            return Result.error(
+                    ErrorCode.INTERNAL_ERROR,
+                    "Ocurrió un error inesperado en el servidor.",
+                    e
+            );
         } catch (Exception e) {
-            return Result.error(ErrorCode.INTERNAL_ERROR, "Ocurrio un error en el servidor", e);
+            return Result.error(
+                    ErrorCode.INTERNAL_ERROR,
+                    "Ocurrió un error en el servidor.",
+                    e
+            );
         }
     }
 
-    //CUANDO VOY A RECIBIR UNA LISTA (result.objects)
-    protected Result ejecutarLista(Supplier<List<?>> accion) {
+    protected <T> Result<T> ejecutarLista(Supplier<List<T>> accion) {
         try {
             return Result.okList(accion.get());
         } catch (IllegalArgumentException e) {
-            return Result.error(ErrorCode.INVALID_INPUT, e.getMessage(), e);
+            return Result.error(ErrorCode.INVALID_INPUT, e.getLocalizedMessage(), e);
+        } catch (java.util.NoSuchElementException e) {
+            return Result.error(ErrorCode.NOT_FOUND, e.getLocalizedMessage(), e);
         } catch (RuntimeException e) {
-            return Result.error(ErrorCode.NOT_FOUND, e.getMessage(), e);
+            return Result.error(
+                    ErrorCode.INTERNAL_ERROR,
+                    "Ocurrió un error inesperado en el servidor.",
+                    e
+            );
         } catch (Exception e) {
-            return Result.error(ErrorCode.INTERNAL_ERROR,
-                    "Ocurrió un error inesperado", e);
+            return Result.error(
+                    ErrorCode.INTERNAL_ERROR,
+                    "Ocurrió un error en el servidor.",
+                    e
+            );
         }
     }
 
-    protected Result ejecutarVoid(Runnable action) {
+    protected Result<Void> ejecutarVoid(Runnable accion) {
         try {
-            action.run();
-            return Result.ok(true);
+            accion.run();
+            return Result.ok();
+        } catch (IllegalArgumentException e) {
+            return Result.error(ErrorCode.INVALID_INPUT, e.getLocalizedMessage(), e);
+        } catch (java.util.NoSuchElementException e) {
+            return Result.error(ErrorCode.NOT_FOUND, e.getLocalizedMessage(), e);
+        } catch (RuntimeException e) {
+            return Result.error(
+                    ErrorCode.INTERNAL_ERROR,
+                    "Ocurrió un error inesperado en el servidor.",
+                    e
+            );
         } catch (Exception e) {
-            return Result.error(ErrorCode.INTERNAL_ERROR, e.getLocalizedMessage());
+            return Result.error(
+                    ErrorCode.INTERNAL_ERROR,
+                    "Ocurrió un error en el servidor.",
+                    e
+            );
         }
     }
-    
 }

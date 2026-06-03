@@ -16,7 +16,7 @@ public class CatalogoController extends BaseController {
     private CatalogoService catalogoService;
 
     @GetMapping("/banco")
-    public ResponseEntity<Result> obtenerBancos() {
+    public ResponseEntity<Result<?>> obtenerBancos() {
         return responder(catalogoService.obtenerBancos());
     }
 }
