@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.service;
+package com.digis.ggarciabanco.service;
 
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;

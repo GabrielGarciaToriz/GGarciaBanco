@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.dto.usuario;
+package com.digis.ggarciabanco.dto.usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

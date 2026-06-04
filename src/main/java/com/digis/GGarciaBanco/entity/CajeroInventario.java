@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.entity;
+package com.digis.ggarciabanco.entity;
 
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;

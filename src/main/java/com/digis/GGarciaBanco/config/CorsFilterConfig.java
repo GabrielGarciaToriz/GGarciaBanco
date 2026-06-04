@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.config;
+package com.digis.ggarciabanco.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

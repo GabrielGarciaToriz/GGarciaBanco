@@ -1,13 +1,12 @@
-package com.digis.GGarciaBanco.repository;
+package com.digis.ggarciabanco.repository;
 
-import com.digis.GGarciaBanco.dto.retiro.MovimientoResponse;
-import com.digis.GGarciaBanco.dto.retiro.RetiroResponse;
+import com.digis.ggarciabanco.dto.retiro.MovimientoResponse;
+import com.digis.ggarciabanco.dto.retiro.RetiroResponse;
 import java.math.BigDecimal;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
@@ -20,8 +19,11 @@ public class RetiroRepository extends BaseRepository {
     }
 
     @SuppressWarnings("unchecked")
-    public RetiroResponse retirar(Integer idUsuario, String numeroTarjeta,
-            Integer idCajero, BigDecimal monto) {
+    public RetiroResponse retirar(
+            Integer idUsuario,
+            String numeroTarjeta,
+            Integer idCajero,
+            BigDecimal monto) {
 
         SimpleJdbcCall call = new SimpleJdbcCall(jdbc)
                 .withProcedureName("sp_retiro_efectivo")

@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.entity;
+package com.digis.ggarciabanco.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

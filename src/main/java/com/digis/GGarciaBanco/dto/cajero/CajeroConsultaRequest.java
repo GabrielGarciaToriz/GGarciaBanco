@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.dto.cajero;
+package com.digis.ggarciabanco.dto.cajero;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.config;
+package com.digis.ggarciabanco.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

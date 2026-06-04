@@ -1,6 +1,6 @@
-package com.digis.GGarciaBanco.config;
+package com.digis.ggarciabanco.config;
 
-import com.digis.GGarciaBanco.util.JwtUtil;
+import com.digis.ggarciabanco.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

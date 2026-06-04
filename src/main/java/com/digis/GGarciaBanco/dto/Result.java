@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.dto;
+package com.digis.ggarciabanco.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

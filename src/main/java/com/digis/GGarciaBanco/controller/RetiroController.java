@@ -1,10 +1,10 @@
-package com.digis.GGarciaBanco.controller;
+package com.digis.ggarciabanco.controller;
 
-import com.digis.GGarciaBanco.dto.Result;
-import com.digis.GGarciaBanco.dto.retiro.HistorialMovimientoResponse;
-import com.digis.GGarciaBanco.dto.retiro.RetiroRequest;
-import com.digis.GGarciaBanco.service.HistorialMovimientoService;
-import com.digis.GGarciaBanco.service.RetiroService;
+import com.digis.ggarciabanco.dto.Result;
+import com.digis.ggarciabanco.dto.retiro.HistorialMovimientoResponse;
+import com.digis.ggarciabanco.dto.retiro.RetiroRequest;
+import com.digis.ggarciabanco.service.HistorialMovimientoService;
+import com.digis.ggarciabanco.service.RetiroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

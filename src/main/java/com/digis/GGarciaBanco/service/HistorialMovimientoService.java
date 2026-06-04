@@ -1,8 +1,8 @@
-package com.digis.GGarciaBanco.service;
+package com.digis.ggarciabanco.service;
 
-import com.digis.GGarciaBanco.dto.Result;
-import com.digis.GGarciaBanco.dto.retiro.HistorialMovimientoResponse;
-import com.digis.GGarciaBanco.repository.HistorialMovimientoResponseRepository;
+import com.digis.ggarciabanco.dto.Result;
+import com.digis.ggarciabanco.dto.retiro.HistorialMovimientoResponse;
+import com.digis.ggarciabanco.repository.HistorialMovimientoResponseRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

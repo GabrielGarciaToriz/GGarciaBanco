@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.dto.sp;
+package com.digis.ggarciabanco.dto.sp;
 
 import java.util.List;
 import lombok.AllArgsConstructor;

@@ -1,8 +1,8 @@
-package com.digis.GGarciaBanco.controller;
+package com.digis.ggarciabanco.controller;
 
-import com.digis.GGarciaBanco.dto.password.CambiarPasswordRequest;
-import com.digis.GGarciaBanco.dto.password.SolicitarResetRequest;
-import com.digis.GGarciaBanco.service.PasswordResetService;
+import com.digis.ggarciabanco.dto.password.CambiarPasswordRequest;
+import com.digis.ggarciabanco.dto.password.SolicitarResetRequest;
+import com.digis.ggarciabanco.service.PasswordResetService;
 import jakarta.validation.Valid;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

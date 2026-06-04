@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.dto.retiro;
+package com.digis.ggarciabanco.dto.retiro;
 
 import java.math.BigDecimal;
 import lombok.Data;

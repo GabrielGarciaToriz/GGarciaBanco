@@ -1,7 +1,7 @@
-package com.digis.GGarciaBanco.controller;
+package com.digis.ggarciabanco.controller;
 
-import com.digis.GGarciaBanco.dto.Result;
-import com.digis.GGarciaBanco.exception.ErrorCode;
+import com.digis.ggarciabanco.dto.Result;
+import com.digis.ggarciabanco.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

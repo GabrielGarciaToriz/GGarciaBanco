@@ -1,8 +1,8 @@
-package com.digis.GGarciaBanco.service;
+package com.digis.ggarciabanco.service;
 
-import com.digis.GGarciaBanco.repository.TokenResetPasswordRepository;
-import com.digis.GGarciaBanco.repository.UsuarioRepository;
-import com.digis.GGarciaBanco.entity.Usuario;
+import com.digis.ggarciabanco.repository.TokenResetPasswordRepository;
+import com.digis.ggarciabanco.repository.UsuarioRepository;
+import com.digis.ggarciabanco.entity.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PersistenceContext;

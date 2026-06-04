@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.dto.password;
+package com.digis.ggarciabanco.dto.password;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

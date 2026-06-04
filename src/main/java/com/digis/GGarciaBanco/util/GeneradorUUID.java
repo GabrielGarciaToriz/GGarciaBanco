@@ -1,6 +1,6 @@
-package com.digis.GGarciaBanco.util;
+package com.digis.ggarciabanco.util;
 
-import com.digis.GGarciaBanco.dto.Result;
+import com.digis.ggarciabanco.dto.Result;
 import java.util.UUID;
 
 public class GeneradorUUID {
