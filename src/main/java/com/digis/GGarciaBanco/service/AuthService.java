@@ -1,13 +1,13 @@
-package com.digis.GGarciaBanco.service;
+package com.digis.ggarciabanco.service;
 
-import com.digis.GGarciaBanco.dto.Result;
-import com.digis.GGarciaBanco.dto.auth.AuthResponse;
-import com.digis.GGarciaBanco.dto.login.LoginRequest;
-import com.digis.GGarciaBanco.entity.Tarjeta;
-import com.digis.GGarciaBanco.entity.Usuario;
-import com.digis.GGarciaBanco.exception.ErrorCode;
-import com.digis.GGarciaBanco.repository.TarjetaRepository;
-import com.digis.GGarciaBanco.util.JwtUtil;
+import com.digis.ggarciabanco.dto.Result;
+import com.digis.ggarciabanco.dto.auth.AuthResponse;
+import com.digis.ggarciabanco.dto.login.LoginRequest;
+import com.digis.ggarciabanco.entity.Tarjeta;
+import com.digis.ggarciabanco.entity.Usuario;
+import com.digis.ggarciabanco.exception.ErrorCode;
+import com.digis.ggarciabanco.repository.TarjetaRepository;
+import com.digis.ggarciabanco.util.JwtUtil;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

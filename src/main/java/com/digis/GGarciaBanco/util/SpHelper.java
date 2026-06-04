@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.util;
+package com.digis.ggarciabanco.util;
 
 import java.math.BigDecimal;
 import lombok.AccessLevel;

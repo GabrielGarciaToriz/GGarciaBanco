@@ -1,12 +1,12 @@
-package com.digis.GGarciaBanco.service;
+package com.digis.ggarciabanco.service;
 
-import com.digis.GGarciaBanco.dto.Result;
-import com.digis.GGarciaBanco.dto.retiro.MovimientoResponse;
-import com.digis.GGarciaBanco.dto.retiro.RetiroRequest;
-import com.digis.GGarciaBanco.dto.retiro.RetiroResponse;
-import com.digis.GGarciaBanco.dto.sp.StoredProcedureResult;
-import com.digis.GGarciaBanco.repository.CajeroRepository;
-import com.digis.GGarciaBanco.repository.RetiroRepository;
+import com.digis.ggarciabanco.dto.Result;
+import com.digis.ggarciabanco.dto.retiro.MovimientoResponse;
+import com.digis.ggarciabanco.dto.retiro.RetiroRequest;
+import com.digis.ggarciabanco.dto.retiro.RetiroResponse;
+import com.digis.ggarciabanco.dto.sp.StoredProcedureResult;
+import com.digis.ggarciabanco.repository.CajeroRepository;
+import com.digis.ggarciabanco.repository.RetiroRepository;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;

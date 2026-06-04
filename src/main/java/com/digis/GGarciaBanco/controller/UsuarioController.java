@@ -1,8 +1,8 @@
-package com.digis.GGarciaBanco.controller;
+package com.digis.ggarciabanco.controller;
 
-import com.digis.GGarciaBanco.dto.Result;
-import com.digis.GGarciaBanco.dto.usuario.UsuarioRegistroRequest;
-import com.digis.GGarciaBanco.service.UsuarioService;
+import com.digis.ggarciabanco.dto.Result;
+import com.digis.ggarciabanco.dto.usuario.UsuarioRegistroRequest;
+import com.digis.ggarciabanco.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

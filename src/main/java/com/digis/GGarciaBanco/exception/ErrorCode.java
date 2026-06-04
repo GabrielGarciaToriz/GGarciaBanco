@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.exception;
+package com.digis.ggarciabanco.exception;
 
 public class ErrorCode {
 

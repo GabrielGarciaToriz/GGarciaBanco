@@ -1,6 +1,6 @@
-package com.digis.GGarciaBanco.repository;
+package com.digis.ggarciabanco.repository;
 
-import com.digis.GGarciaBanco.entity.TokenResetPassword;
+import com.digis.ggarciabanco.entity.TokenResetPassword;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

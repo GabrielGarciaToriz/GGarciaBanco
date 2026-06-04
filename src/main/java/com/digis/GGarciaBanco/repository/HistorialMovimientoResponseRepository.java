@@ -1,6 +1,6 @@
-package com.digis.GGarciaBanco.repository;
+package com.digis.ggarciabanco.repository;
 
-import com.digis.GGarciaBanco.dto.retiro.HistorialMovimientoResponse;
+import com.digis.ggarciabanco.dto.retiro.HistorialMovimientoResponse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PersistenceContext;

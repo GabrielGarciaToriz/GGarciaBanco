@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.util;
+package com.digis.ggarciabanco.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

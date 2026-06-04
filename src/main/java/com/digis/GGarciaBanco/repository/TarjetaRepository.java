@@ -1,6 +1,6 @@
-package com.digis.GGarciaBanco.repository;
+package com.digis.ggarciabanco.repository;
 
-import com.digis.GGarciaBanco.entity.Tarjeta;
+import com.digis.ggarciabanco.entity.Tarjeta;
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,10 +1,10 @@
-package com.digis.GGarciaBanco.service;
+package com.digis.ggarciabanco.service;
 
-import com.digis.GGarciaBanco.dto.Result;
-import com.digis.GGarciaBanco.dto.cajero.CajeroResponse;
-import com.digis.GGarciaBanco.dto.cajero.DashboardCajeroResponse;
-import com.digis.GGarciaBanco.dto.cajero.InventarioCajeroResponse;
-import com.digis.GGarciaBanco.repository.CajeroRepository;
+import com.digis.ggarciabanco.dto.Result;
+import com.digis.ggarciabanco.dto.cajero.CajeroResponse;
+import com.digis.ggarciabanco.dto.cajero.DashboardCajeroResponse;
+import com.digis.ggarciabanco.dto.cajero.InventarioCajeroResponse;
+import com.digis.ggarciabanco.repository.CajeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

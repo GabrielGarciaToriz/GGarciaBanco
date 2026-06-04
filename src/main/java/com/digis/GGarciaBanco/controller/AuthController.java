@@ -1,8 +1,8 @@
-package com.digis.GGarciaBanco.controller;
+package com.digis.ggarciabanco.controller;
 
-import com.digis.GGarciaBanco.dto.Result;
-import com.digis.GGarciaBanco.dto.login.LoginRequest;
-import com.digis.GGarciaBanco.service.AuthService;
+import com.digis.ggarciabanco.dto.Result;
+import com.digis.ggarciabanco.dto.login.LoginRequest;
+import com.digis.ggarciabanco.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,5 +1,5 @@
 
-package com.digis.GGarciaBanco.dto.catalogo;
+package com.digis.ggarciabanco.dto.catalogo;
 
 import lombok.Data;
 

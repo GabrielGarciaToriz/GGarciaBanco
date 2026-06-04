@@ -1,8 +1,8 @@
-package com.digis.GGarciaBanco.controller;
+package com.digis.ggarciabanco.controller;
 
-import com.digis.GGarciaBanco.dto.Result;
-import com.digis.GGarciaBanco.dto.cajero.CajeroConsultaRequest;
-import com.digis.GGarciaBanco.service.CajeroService;
+import com.digis.ggarciabanco.dto.Result;
+import com.digis.ggarciabanco.dto.cajero.CajeroConsultaRequest;
+import com.digis.ggarciabanco.service.CajeroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

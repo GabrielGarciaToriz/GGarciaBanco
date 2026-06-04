@@ -1,6 +1,6 @@
-package com.digis.GGarciaBanco.service;
+package com.digis.ggarciabanco.service;
 
-import com.digis.GGarciaBanco.repository.TarjetaRepository;
+import com.digis.ggarciabanco.repository.TarjetaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

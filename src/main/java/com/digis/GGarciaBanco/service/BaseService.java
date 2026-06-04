@@ -1,7 +1,7 @@
-package com.digis.GGarciaBanco.service;
+package com.digis.ggarciabanco.service;
 
-import com.digis.GGarciaBanco.dto.Result;
-import com.digis.GGarciaBanco.exception.ErrorCode;
+import com.digis.ggarciabanco.dto.Result;
+import com.digis.ggarciabanco.exception.ErrorCode;
 import java.util.List;
 import java.util.function.Supplier;
 

@@ -1,6 +1,6 @@
-package com.digis.GGarciaBanco.repository;
+package com.digis.ggarciabanco.repository;
 
-import com.digis.GGarciaBanco.dto.catalogo.BancoResponse;
+import com.digis.ggarciabanco.dto.catalogo.BancoResponse;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

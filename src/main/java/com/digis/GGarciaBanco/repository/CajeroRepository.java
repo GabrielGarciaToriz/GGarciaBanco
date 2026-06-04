@@ -1,8 +1,8 @@
-package com.digis.GGarciaBanco.repository;
+package com.digis.ggarciabanco.repository;
 
-import com.digis.GGarciaBanco.dto.cajero.CajeroResponse;
-import com.digis.GGarciaBanco.dto.cajero.DashboardCajeroResponse;
-import com.digis.GGarciaBanco.dto.cajero.InventarioCajeroResponse;
+import com.digis.ggarciabanco.dto.cajero.CajeroResponse;
+import com.digis.ggarciabanco.dto.cajero.DashboardCajeroResponse;
+import com.digis.ggarciabanco.dto.cajero.InventarioCajeroResponse;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.List;

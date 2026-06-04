@@ -1,4 +1,4 @@
-package com.digis.GGarciaBanco.repository;
+package com.digis.ggarciabanco.repository;
 
 import java.util.Map;
 

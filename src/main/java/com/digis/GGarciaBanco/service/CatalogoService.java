@@ -1,10 +1,10 @@
-package com.digis.GGarciaBanco.service;
+package com.digis.ggarciabanco.service;
 
-import com.digis.GGarciaBanco.dto.Result;
+import com.digis.ggarciabanco.dto.Result;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.digis.GGarciaBanco.repository.BancoRepository;
+import com.digis.ggarciabanco.repository.BancoRepository;
 
 @Service
 public class CatalogoService extends BaseService {
